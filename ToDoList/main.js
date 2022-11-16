@@ -1,10 +1,6 @@
 import { ToDo } from "./todo.js";
 
-let todos = [
-  new ToDo("Zugticket kaufen", false),
-  new ToDo("Wäsche waschen", true),
-  new ToDo("Hausaufgaben machen", true),
-];
+let todos = [];
 
 function updateToDoListOnScreen() {
   const todoListElement = document.getElementById("todolist");
@@ -44,20 +40,23 @@ document.addEventListener("DOMContentLoaded", (event) => {
 
       todo.addEventListener("changeCheck", (e) => {
         const index = todos.indexOf(e.target);
-        todo.erledigt = true;
+        if (todo.erledigt) {
+          todo.erledigt = false;
+        } else {
+          todo.erledigt = true;
+        }
         updateToDoListOnScreen();
       });
 
       const aufräumen = document.getElementById("aufraeumen");
-      todos.forEach(todo => {
-        if (todo.erledigt) {
-          todo.addEventListener('loeschen', (e) => {
-            const index = todos.indexOf(e.target);
-            todos.splice(index, 1);
+      aufräumen.addEventListener("click", (event) => {
+        for (let i = 0; i < todos.length; i++) {
+          if (todos[i].erledigt) {
+            todos.splice(i, 1);
             updateToDoListOnScreen();
-          });
+          }
         }
-      })
+      });
       updateToDoListOnScreen();
     }
   });

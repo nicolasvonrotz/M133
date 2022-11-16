@@ -46,7 +46,6 @@ export class ToDo extends EventTarget{
 
     if (this.#erledigt) {
       checkboxElement.setAttribute("checked", "checked");
-      spanElement.
       divElement.className = "erledigt";
     }
 
@@ -54,6 +53,9 @@ export class ToDo extends EventTarget{
       this.dispatchEvent(new Event('loeschen'));
     });
 
+    checkboxElement.addEventListener('change', () => {
+      this.dispatchEvent(new Event('changeCheck'));
+    });
     return listElement;
   }
 }
