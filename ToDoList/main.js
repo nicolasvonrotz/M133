@@ -7,12 +7,20 @@ function updateToDoListOnScreen() {
 
   // Liste leeren
   todoListElement.innerHTML = "";
+  let allTodosForLocalstorage = [];
+  let i = 0;
 
   // ToDo's einfügen
-  for (const todo of todos) {
+  for (const todo of todos.sort((a,b) => a.titel.localeCompare(b.titel))) {
     const toDoListEntry = todo.element();
     todoListElement.appendChild(toDoListEntry);
+    allTodosForLocalstorage[i] = { 'titel': todo.titel, 'erledigt': todo.erledigt}
+    i++;
   }
+
+  localStorage.clear;
+  localStorage.setItem('todos', JSON.stringify(allTodosForLocalstorage));
+
 
   // offene ToDo's
   const offeneToDos = todos.filter((offen) => !offen.erledigt);
